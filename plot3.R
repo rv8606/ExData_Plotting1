@@ -28,10 +28,11 @@ my_interval <- unite(my_interval, "Date_Time", Date, Time, sep = " ")
 # Do not forget to convert it to a proper date and time
 my_interval$Date_Time <- strptime(my_interval$Date_Time, "%Y-%m-%d %H:%M:%S")
 
-par(mfrow = c(1,1), oma=c(0,2,0,0))
+# Define the range for the Y scale values
+myrange <- range(c(as.numeric(my_interval$Sub_metering_1), as.numeric(my_interval$Sub_metering_2), as.numeric(my_interval$Sub_metering_3)))
 
 png(filename="plot3.png", width = 480, height = 480)
-myrange <- range(c(as.numeric(my_interval$Sub_metering_1), as.numeric(my_interval$Sub_metering_2), as.numeric(my_interval$Sub_metering_3)))
+par(mfrow = c(1,1), oma=c(0,2,0,0))
 plot(my_interval$Date_Time, my_interval$Sub_metering_1, type="n", ylim = c(as.numeric(myrange[1]), as.numeric(myrange[2])), xlab="", ylab="")
 lines(my_interval$Date_Time, my_interval$Sub_metering_1)
 lines(my_interval$Date_Time, my_interval$Sub_metering_2, col="red")
